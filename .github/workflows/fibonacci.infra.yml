@@ -40,7 +40,7 @@ jobs:
           subscriptionId: '${{ secrets.SUBSCRIPTION_ID }}'
           resourceGroupName: ${{ vars.FIBONACCI_RESOURCE_GROUP }}
           template: ./fibonacciApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}} webappName=${{ vars.FIBONACCI_WEBAPP_NAME }} appServicePlanName=${{ vars.FIBONACCI_WEBAPP_NAME }}-asp }}
+          parameters: location=${{ env.LOCATION}} webappname=${{ vars.FIBONACCI_WEBAPP_NAME }}
 
       - uses: gliech/create-github-secret-action@v1
         name: Write Web App URL FIBONACCI API Dev URL
@@ -80,7 +80,7 @@ jobs:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           resourceGroupName: ${{ vars.FIBONACCI_RESOURCE_GROUP }}
           template: ./fibonacciApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}} webappname=${{ vars.FIBONACCI_WEBAPP_NAME }} appServicePlanName=${{ vars.FIBONACCI_WEBAPP_NAME }}-asp }}
+          parameters: location=${{ env.LOCATION}} webappname=${{ vars.FIBONACCI_WEBAPP_NAME }}
 
 
       - name: Write Web App URL FIBONACCI API Prod URL

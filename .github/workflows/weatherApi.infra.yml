@@ -42,7 +42,7 @@ jobs:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           resourceGroupName: ${{ vars.WEATHER_RESOURCE_GROUP }}
           template: ./weatherApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}}     
+          parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEATHER_WEBAPP_NAME }}     
 
       - uses: gliech/create-github-secret-action@v1
         name: Write Web App URL WEATHERAPI Dev
@@ -81,7 +81,7 @@ jobs:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           resourceGroupName: ${{ vars.WEATHER_RESOURCE_GROUP }}
           template: ./weatherApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEATHER_WEBAPP_NAME }} appServicePlanName=${{ vars.WEATHER_WEBAPP_NAME }}-asp }}    
+          parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEATHER_WEBAPP_NAME }}     
 
       - uses: gliech/create-github-secret-action@v1
         name: Write Web App URL WEATHERAPI PROD

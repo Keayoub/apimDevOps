@@ -1,16 +1,15 @@
 param location string
 
-@description('The named app service plan')
-param appServicePlanName string
-
 @description('The named web app')
 param webappname string
 
+var appserviceplan = '${webappname}-plan'
+
 resource appPlan 'Microsoft.Web/serverfarms@2018-02-01' = {
-  name: appServicePlanName
+  name: appserviceplan
   location: location
   sku: {
-    name: 'B1'
+    name: 'S1'
     capacity: 1
   }
 }
