@@ -7,7 +7,7 @@ resource appPlanName 'Microsoft.Web/serverfarms@2018-02-01' = {
   name: appServicePlanName
   location: location
   sku: {
-    name: 'S1'
+    name: 'B1'
     capacity: 1
   }
 }
