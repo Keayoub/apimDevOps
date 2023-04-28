@@ -41,7 +41,7 @@ jobs:
       - uses: gliech/create-github-secret-action@v1
         with:
           name: APIM_DEV_NAME
-          value: ${{ steps.deployAzRes.outputs.apiManegementName }}
+          value: ${{ steps.deployAzRes.outputs.apiManagementName }}
           pa_token: ${{ secrets.PA_TOKEN }}             
   
   deploy-prod:
@@ -74,5 +74,5 @@ jobs:
       - uses: gliech/create-github-secret-action@v1
         with:
           name: APIM_PROD_NAME
-          value: ${{ steps.deployAzRes.outputs.apiManegementName }}
+          value: ${{ steps.deployAzRes.outputs.apiManagementName }}
           pa_token: ${{ secrets.PA_TOKEN }}                

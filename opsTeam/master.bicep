@@ -72,4 +72,4 @@ module globalPolicy 'policy/global.policy.bicep' = {
   ]
 }
 
-output apiManegementName string = apimName
+output apiManagementName string = apimName
