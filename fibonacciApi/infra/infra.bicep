@@ -34,4 +34,5 @@ resource web 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
+// output the url for the web app
 output url string = 'https://${web.properties.hostNames[0]}'
