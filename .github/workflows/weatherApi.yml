@@ -1,104 +1,104 @@
 name: Deploy Weather API
 
-on:  
+on:
   push:
     paths:
-      - 'weatherApi/**'
+      - "weatherApi/**"
   workflow_dispatch:
 
 env:
-  LOCATION: 'eastus'
-  AZURE_WEBAPP_PACKAGE_PATH: 'artifact'
+  LOCATION: "eastus"
+  AZURE_WEBAPP_PACKAGE_PATH: "artifact"
 
 jobs:
-  build-api:        
+  build-api:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup Dotnet 3.3.x
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '7.x'
+          dotnet-version: "7.x"
 
       - name: dotnet build and publish
         working-directory: ./weatherApi/src
         run: |
           dotnet restore
           dotnet build --configuration Release
-          dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/weatherApi'          
-          
+          dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/weatherApi'
+
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2.2.4
-        with:          
-          name: artifact        
-          path: './weatherApi/src/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/weatherApi'
+        with:
+          name: artifact
+          path: "./weatherApi/src/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/weatherApi"
 
-  deploy-api-dev:    
-    needs: 
+  deploy-api-dev:
+    needs:
       - build-api
-    
-    environment: DEV  
+
+    environment: DEV
 
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Download Build Artifact
         uses: actions/download-artifact@v2.0.10
-        with:          
-          name: artifact      
+        with:
+          name: artifact
 
       - name: Azure Login
         uses: Azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}    
-          
-      - name: 'Deploy Azure WebApp'
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy Azure WebApp"
         uses: azure/webapps-deploy@v2
-        with: 
+        with:
           app-name: ${{ secrets.WEBAPP_WEATHERAPI_NAME_DEV }}
 
-      - name: Deploy API in APIM        
+      - name: Deploy API in APIM
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
           template: ./weatherApi/template/api.bicep
-          parameters: WebUrl=${{ secrets.WEBAPP_WEATHERAPI_URL_DEV }} ApimServiceName=${{ vars.APIM_NAME}}   
+          parameters: WebUrl=${{ secrets.WEBAPP_WEATHERAPI_URL_DEV }} ApimServiceName=${{ vars.APIM_NAME}}
 
-  deploy-api-prod:    
-    needs: 
+  deploy-api-prod:
+    needs:
       - deploy-api-dev
-    
-    environment: PROD      
+
+    environment: PROD
 
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Download Build Artifact
         uses: actions/download-artifact@v2.0.10
-        with:          
-          name: artifact      
+        with:
+          name: artifact
 
       - name: Azure Login
         uses: Azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}    
-          
-      - name: 'Deploy Azure WebApp'
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy Azure WebApp"
         uses: azure/webapps-deploy@v2
-        with: 
+        with:
           app-name: ${{ secrets.WEBAPP_WEATHERAPI_NAME_PROD }}
 
-      - name: Deploy API in APIM        
+      - name: Deploy API in APIM
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
           template: ./weatherApi/template/api.bicep
-          parameters: WebUrl=${{ secrets.WEBAPP_WEATHERAPI_URL_PROD }} ApimServiceName=${{ vars.APIM_NAME}}                      
+          parameters: WebUrl=${{ secrets.WEBAPP_WEATHERAPI_URL_PROD }} ApimServiceName=${{ vars.APIM_NAME}}
