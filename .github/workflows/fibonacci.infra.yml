@@ -82,7 +82,7 @@ jobs:
         run: |
          bicep build ./fibonacciApi/infra/infra.bicep         
 
-      - name: Deploy Azure Resource Manager (ARM) Template
+      - name: Deploy Azure Resource Manager Bicep Template
         id: armDeployment
         uses: Azure/arm-deploy@v1
         with:

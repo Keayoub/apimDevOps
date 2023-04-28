@@ -20,8 +20,3 @@ resource ApimServiceName_WeatherApi 'Microsoft.ApiManagement/service/apis@2021-0
   
   dependsOn: []
 }
-
-// resource ApimServiceName_free_api_weatherapi 'Microsoft.ApiManagement/service/products/apis@2021-01-01-preview' = {
-//   name: '${ApimServiceName}/free-api/weatherapi'
-//   dependsOn: []
-// }
