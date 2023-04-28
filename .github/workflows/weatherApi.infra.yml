@@ -42,14 +42,7 @@ jobs:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           resourceGroupName: ${{ vars.WEATHER_API_RESOURCE_GROUP }}
           template: ./weatherApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}}
-
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Web App Name WEATHERAPI Dev
-        with:
-          name: WEBAPP_WEATHERAPI_NAME_DEV
-          value: ${{ steps.armDeployment.outputs.webAppName }}
-          pa_token: ${{ secrets.PA_TOKEN }}
+          parameters: location=${{ env.LOCATION}}     
 
       - uses: gliech/create-github-secret-action@v1
         name: Write Web App URL WEATHERAPI Dev
@@ -88,18 +81,11 @@ jobs:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           resourceGroupName: ${{ vars.WEATHER_API_RESOURCE_GROUP }}
           template: ./weatherApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEATHER_WEBAPP_NAME }} appServicePlanName=${{ vars.WEATHER_WEBAPP_NAME }}-asp }}
+          parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEATHER_WEBAPP_NAME }} appServicePlanName=${{ vars.WEATHER_WEBAPP_NAME }}-asp }}    
 
-      # - uses: gliech/create-github-secret-action@v1
-      #   name: Write Web App Name WEATHERAPI PROD
-      #   with:
-      #     name: WEBAPP_WEATHERAPI_NAME_PROD
-      #     value: ${{ steps.armDeployment.outputs.webAppName }}
-      #     pa_token: ${{ secrets.PA_TOKEN }}
-
-      # - uses: gliech/create-github-secret-action@v1
-      #   name: Write Web App URL WEATHERAPI PROD
-      #   with:
-      #     name: WEBAPP_WEATHERAPI_URL_PROD
-      #     value: ${{ steps.armDeployment.outputs.url }}
-      #     pa_token: ${{ secrets.PA_TOKEN }}                               
+      - uses: gliech/create-github-secret-action@v1
+        name: Write Web App URL WEATHERAPI PROD
+        with:
+          name: WEBAPP_WEATHERAPI_URL_PROD
+          value: ${{ steps.armDeployment.outputs.url }}
+          pa_token: ${{ secrets.PA_TOKEN }}                               

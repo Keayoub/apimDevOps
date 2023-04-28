@@ -1,13 +1,16 @@
 param location string
 
-var aspName = 'appplan-${uniqueString(resourceGroup().id)}'
-var webappname = 'webapp-${uniqueString(resourceGroup().id)}'
+@description('The named app service plan')
+param appServicePlanName string
 
-resource appPlanName 'Microsoft.Web/serverfarms@2018-02-01' = {
-  name: aspName
+@description('The named web app')
+param webappname string
+
+resource appPlan 'Microsoft.Web/serverfarms@2018-02-01' = {
+  name: appServicePlanName
   location: location
   sku: {
-    name: 'S1'
+    name: 'B1'
     capacity: 1
   }
 }
@@ -16,7 +19,7 @@ resource web 'Microsoft.Web/sites@2018-11-01' = {
   name: webappname
   location: location
   properties: {    
-    serverFarmId: appPlanName.id
+    serverFarmId: appPlan.id
     siteConfig: {
       netFrameworkVersion: 'v7.0'
       metadata: [
@@ -30,5 +33,4 @@ resource web 'Microsoft.Web/sites@2018-11-01' = {
   }
 }
 
-output webAppname string = webappname
 output url string = 'https://${web.properties.hostNames[0]}'

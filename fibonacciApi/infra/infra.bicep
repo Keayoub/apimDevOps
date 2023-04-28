@@ -6,7 +6,7 @@ param appServicePlanName string
 @description('The named web app')
 param webappname string
 
-resource appPlanName 'Microsoft.Web/serverfarms@2018-02-01' = {
+resource appPlan 'Microsoft.Web/serverfarms@2018-02-01' = {
   name: appServicePlanName
   location: location
   sku: {
@@ -15,11 +15,11 @@ resource appPlanName 'Microsoft.Web/serverfarms@2018-02-01' = {
   }
 }
 
-resource webAppName 'Microsoft.Web/sites@2022-03-01' = {
+resource web 'Microsoft.Web/sites@2022-03-01' = {
   name: webappname
   location: location
   properties: {    
-    serverFarmId: appPlanName.id
+    serverFarmId: appPlan.id
     siteConfig: {
       netFrameworkVersion: 'v7.0'
       metadata: [
@@ -34,4 +34,4 @@ resource webAppName 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
-output url string = 'https://${webAppName.properties.hostNames[0]}'
+output url string = 'https://${web.properties.hostNames[0]}'

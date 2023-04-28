@@ -41,6 +41,13 @@ jobs:
           resourceGroupName: ${{ vars.FIBONACCI_API_RESOURCE_GROUP }}
           template: ./fibonacciApi/infra/infra.json
           parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEBAPP_FIBONACCI_NAME }} appServicePlanName=${{ vars.WEBAPP_FIBONACCI_NAME }}-asp }}
+
+      - uses: gliech/create-github-secret-action@v1
+        name: Write Web App URL FIBONACCI API Dev URL
+        with:
+          name: WEBAPP_FIBONACCI_URL_DEV
+          value: ${{ steps.armDeployment.outputs.url }}
+          pa_token: ${{ secrets.PA_TOKEN }}       
      
   create-azure-resource-prod:
     needs:             
@@ -74,3 +81,11 @@ jobs:
           resourceGroupName: ${{ vars.FIBONACCI_API_RESOURCE_GROUP }}
           template: ./fibonacciApi/infra/infra.json
           parameters: location=${{ env.LOCATION}} webappname=${{ vars.FIBONACCI_WEBAPP_NAME }} appServicePlanName=${{ vars.FIBONACCI_WEBAPP_NAME }}-asp }}
+
+
+      - name: Write Web App URL FIBONACCI API Prod URL
+        uses: gliech/create-github-secret-action@v1      
+        with:
+          name: WEBAPP_FIBONACCI_URL_PROD
+          value: ${{ steps.armDeployment.outputs.url }}
+          pa_token: ${{ secrets.PA_TOKEN }}   
