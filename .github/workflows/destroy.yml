@@ -16,7 +16,7 @@ jobs:
 
       - name: Destroy Resource Group
         run: |
-          az group delete -n ${{ vars.APIM_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.RESOURCE_GROUP_NAME}} --yes
           az group delete -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP}} --yes
           az group delete -n ${{ vars.WEATHER_API_RESOURCE_GROUP}} --yes
 
@@ -25,7 +25,7 @@ jobs:
     environment: PROD
     needs:
       - destroy-DEV
-      
+
     steps:
       - name: Azure Login
         uses: Azure/login@v1
