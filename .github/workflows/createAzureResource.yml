@@ -13,9 +13,7 @@ env:
 
 jobs:
   deploy-dev:
-    env:
-      RESOURCE_GROUP_NAME: 'rg-apim-bicep-dev'
-    
+
     environment: DEV
 
     runs-on: ubuntu-latest
@@ -36,19 +34,11 @@ jobs:
           scope: subscription      
           region: ${{ env.LOCATION }}
           template: ./opsTeam/master.bicep
-          parameters: environmentValue=dev rgName=${{ env.RESOURCE_GROUP_NAME }} repoBaseUrl=${{ env.BASE_REPO_URL }} location=${{ env.LOCATION}} publisherEmail=${{ secrets.PUPLISHER_EMAIL }} publisherName=${{ secrets.PUBLISHER_NAME }}
-
-      - uses: gliech/create-github-secret-action@v1
-        with:
-          name: APIM_DEV_NAME
-          value: ${{ steps.deployAzRes.outputs.apiManagementName }}
-          pa_token: ${{ secrets.PA_TOKEN }}             
-  
+          parameters: environmentValue=dev rgName=${{ vars.RESOURCE_GROUP_NAME }} apimName=${{ vars.APIM_NAME }}  repoBaseUrl=${{ env.BASE_REPO_URL }} location=${{ env.LOCATION}} publisherEmail=${{ secrets.PUPLISHER_EMAIL }} publisherName=${{ secrets.PUBLISHER_NAME }}
+             
   deploy-prod:
     needs: deploy-dev
-    env:
-      RESOURCE_GROUP_NAME: 'rg-apim-bicep-prod'
-    
+          
     environment: PROD
 
     runs-on: ubuntu-latest
@@ -69,7 +59,7 @@ jobs:
           scope: subscription      
           region: ${{ env.LOCATION }}
           template: ./opsTeam/master.bicep
-          parameters: environmentValue=prod rgName=${{ env.RESOURCE_GROUP_NAME }} repoBaseUrl=${{ env.BASE_REPO_URL }}  location=${{ env.LOCATION}} publisherEmail=${{ secrets.PUPLISHER_EMAIL }} publisherName=${{ secrets.PUBLISHER_NAME }}      
+          parameters: environmentValue=prod rgName=${{ vars.RESOURCE_GROUP_NAME }} apimName=${{ vars.APIM_NAME }} repoBaseUrl=${{ env.BASE_REPO_URL }}  location=${{ env.LOCATION}} publisherEmail=${{ secrets.PUPLISHER_EMAIL }} publisherName=${{ secrets.PUBLISHER_NAME }}      
 
       - uses: gliech/create-github-secret-action@v1
         with:
