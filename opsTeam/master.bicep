@@ -18,7 +18,8 @@ param publisherName string
 @description('The named value environment')
 param environmentValue string
 
-var apimName = 'apim-${environmentValue}-${uniqueString(rg.id)}'
+@description('The APIM environment name')
+param apimName string
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: rgName
