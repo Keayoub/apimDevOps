@@ -3,7 +3,8 @@ name: Deploy Weather API
 on:
   push:
     paths:
-      - "weatherApi/**"
+      - 'weatherApi/src/**'
+      - 'weatherApi/template/**'
   workflow_dispatch:
 
 env:

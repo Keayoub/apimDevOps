@@ -1,9 +1,9 @@
 name: Deploy Infra Weather API
 
 on:  
-  # push:
-  #   paths:
-  #     - 'weatherApi/**'
+  push:
+    paths:
+      - 'weatherApi/infra/**'
   workflow_dispatch:
 
 env:
