@@ -29,7 +29,7 @@ jobs:
           
       - name: Create Resource Group
         run: |
-          az group create -n ${{ vars.WEATHER_API_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
+          az group create -n ${{ vars.WEATHER_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
 
       - name: Build bicep template
         run: |
@@ -40,7 +40,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ vars.WEATHER_API_RESOURCE_GROUP }}
+          resourceGroupName: ${{ vars.WEATHER_RESOURCE_GROUP }}
           template: ./weatherApi/infra/infra.json
           parameters: location=${{ env.LOCATION}}     
 
@@ -68,7 +68,7 @@ jobs:
           
       - name: Create Resource Group
         run: |
-          az group create -n ${{ vars.WEATHER_API_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
+          az group create -n ${{ vars.WEATHER_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
 
       - name: Build bicep template
         run: |
@@ -79,7 +79,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ vars.WEATHER_API_RESOURCE_GROUP }}
+          resourceGroupName: ${{ vars.WEATHER_RESOURCE_GROUP }}
           template: ./weatherApi/infra/infra.json
           parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEATHER_WEBAPP_NAME }} appServicePlanName=${{ vars.WEATHER_WEBAPP_NAME }}-asp }}    
 
