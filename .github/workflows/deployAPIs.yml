@@ -1,0 +1,56 @@
+name: Deploy APIs to APIM
+
+on:  
+  push:
+    paths:
+      - 'APIs/**'
+
+  workflow_dispatch:
+
+jobs:  
+        
+  deploy-dev:        
+   
+    environment: DEV
+    
+    runs-on: ubuntu-latest    
+
+    steps:
+      - uses: actions/checkout@v2      
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}          
+      
+      - name: Deploy API in APIM        
+        uses: Azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
+          template: ./APIs/apis.bicep
+          parameters: ApimServiceName=${{ vars.APIM_NAME}}                    
+
+  deploy-prod:        
+    needs:             
+      - deploy-dev
+
+    environment: PROD
+    
+    runs-on: ubuntu-latest    
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}          
+          
+      - name: Deploy API in APIM PROD     
+        uses: Azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
+          template: ./APIs/apis.bicep
+          parameters: ApimServiceName=${{ vars.APIM_NAME}}               

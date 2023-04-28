@@ -1,0 +1,47 @@
+openapi: 3.1.0
+info:
+  title: sampleapi
+  description: Import from "kaysampleapi" Function App
+  version: '1.0'
+servers:
+  - url: https://kayapim.azure-api.net/sampleapi
+paths:
+  /GetGuid:
+    get:
+      summary: GetGuid
+      operationId: get-getguid
+      responses:
+        '200':
+          description: 
+    post:
+      summary: GetGuid
+      operationId: post-getguid
+      responses:
+        '200':
+          description: 
+  /GetMessage:
+    get:
+      summary: GetMessage
+      operationId: get-getmessage
+      responses:
+        '200':
+          description: 
+    post:
+      summary: GetMessage
+      operationId: post-getmessage
+      responses:
+        '200':
+          description: 
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]
