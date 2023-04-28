@@ -27,7 +27,7 @@ jobs:
           
       - name: Create Resource Group
         run: |
-          az group create -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
+          az group create -n ${{ vars.FIBONACCI_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
 
       - name: Build bicep template
         run: |
@@ -38,7 +38,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ vars.FIBONACCI_API_RESOURCE_GROUP }}
+          resourceGroupName: ${{ vars.FIBONACCI_RESOURCE_GROUP }}
           template: ./fibonacciApi/infra/infra.json
           parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEBAPP_FIBONACCI_NAME }} appServicePlanName=${{ vars.WEBAPP_FIBONACCI_NAME }}-asp }}
 
@@ -67,7 +67,7 @@ jobs:
           
       - name: Create Resource Group
         run: |
-          az group create -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
+          az group create -n ${{ vars.FIBONACCI_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
 
       - name: Build bicep template
         run: |
@@ -78,7 +78,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ vars.FIBONACCI_API_RESOURCE_GROUP }}
+          resourceGroupName: ${{ vars.FIBONACCI_RESOURCE_GROUP }}
           template: ./fibonacciApi/infra/infra.json
           parameters: location=${{ env.LOCATION}} webappname=${{ vars.FIBONACCI_WEBAPP_NAME }} appServicePlanName=${{ vars.FIBONACCI_WEBAPP_NAME }}-asp }}
 

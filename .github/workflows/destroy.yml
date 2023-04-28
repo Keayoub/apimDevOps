@@ -17,8 +17,8 @@ jobs:
       - name: Destroy Resource Group
         run: |
           az group delete -n ${{ vars.RESOURCE_GROUP_NAME}} --yes
-          az group delete -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP}} --yes
-          az group delete -n ${{ vars.WEATHER_API_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.FIBONACCI_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.WEATHER_RESOURCE_GROUP}} --yes
 
   destroy-PRDO:
     runs-on: ubuntu-latest
@@ -35,5 +35,5 @@ jobs:
       - name: Destroy Resource Group
         run: |
           az group delete -n ${{ vars.RESOURCE_GROUP_NAME}} --yes
-          az group delete -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP}} --yes
-          az group delete -n ${{ vars.WEATHER_API_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.FIBONACCI_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.WEATHER_RESOURCE_GROUP}} --yes
