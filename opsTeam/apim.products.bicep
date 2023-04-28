@@ -15,3 +15,10 @@ resource ApimServiceName_free_api_administrators 'Microsoft.ApiManagement/servic
   parent: ApimServiceName_free_api
   name: 'administrators'
 }
+
+// Create a new apim group called developers
+resource ApimServiceName_free_api_developers 'Microsoft.ApiManagement/service/products/groups@2021-01-01-preview' = {
+  parent: ApimServiceName_free_api
+  name: 'developers'
+}
+
