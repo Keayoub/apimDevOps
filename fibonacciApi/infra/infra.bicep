@@ -1,7 +1,10 @@
 param location string
 
-var appServicePlanName = 'asp-${uniqueString(resourceGroup().id)}'
-var webappname = 'web-${uniqueString(resourceGroup().id)}'
+@description('The named app service plan')
+param appServicePlanName string
+
+@description('The named web app')
+param webappname string
 
 resource appPlanName 'Microsoft.Web/serverfarms@2018-02-01' = {
   name: appServicePlanName
@@ -31,5 +34,4 @@ resource webAppName 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
-output webAppname string = webappname
 output url string = 'https://${webAppName.properties.hostNames[0]}'

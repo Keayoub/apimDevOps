@@ -40,10 +40,6 @@ jobs:
     needs: 
       - build-api   
     
-    env:
-      RESOURCE_GROUP_NAME: 'rg-apim-bicep-dev'
-      APIM_NAME: ${{ secrets.APIM_DEV_NAME }}
-
     environment: DEV
     
     runs-on: ubuntu-latest    
@@ -70,19 +66,15 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
           template: ./fibonacciApi/template/api.bicep
-          parameters: WebUrl=${{ secrets.WEBAPP_FIBONACCI_URL_DEV }} ApimServiceName=${{ env.APIM_NAME}}                    
+          parameters: WebUrl=${{ secrets.WEBAPP_FIBONACCI_URL_DEV }} ApimServiceName=${{ vars.APIM_NAME}}                    
 
   deploy-prod:        
     needs:             
       - deploy-dev
 
-    env:
-      RESOURCE_GROUP_NAME: 'rg-apim-bicep-prod'
-      APIM_NAME: ${{ secrets.APIM_PROD_NAME }}
-
-    environment: prod
+    environment: PROD
     
     runs-on: ubuntu-latest    
 
@@ -109,6 +101,6 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
           template: ./fibonacciApi/template/api.bicep
-          parameters: WebUrl=${{ secrets.WEBAPP_FIBONACCI_URL_PROD }} ApimServiceName=${{ env.APIM_NAME}}               
+          parameters: WebUrl=${{ secrets.WEBAPP_FIBONACCI_URL_PROD }} ApimServiceName=${{ vars.APIM_NAME}}               

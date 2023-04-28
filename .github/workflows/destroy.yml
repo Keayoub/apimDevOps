@@ -3,17 +3,10 @@ name: Destroy Azure Resources
 on:
   workflow_dispatch:
 
-env:
-  APIM_RESOURCE_GROUP: 'apim-core-rg'
-  FIBONACCI_API_RESOURCE_GROUP: 'apim-fibonacci-rg'
-  FIBONACCI_API_RESOURCE_GROUP_PROD: 'apim-fibonacci-prod-rg'
-  WEATHER_API_RESOURCE_GROUP: 'apim-weather-rg'
-  WEATHER_API_RESOURCE_GROUP_PROD: 'apim-weather-prod-rg'
-
 jobs:
-  destroy-apim:
+  destroy-DEV:
     runs-on: ubuntu-latest
-    
+    environment: DEV
     needs:
       - destroy-fibonacci-api
       - destroy-weather-api
@@ -27,11 +20,13 @@ jobs:
     
       - name: Destroy Resource Group
         run: |
-          az group delete -n ${{ env.APIM_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.APIM_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.WEATHER_API_RESOURCE_GROUP}} --yes
           
-  destroy-fibonacci-api:
+  destroy-PRDO:
     runs-on: ubuntu-latest
-
+    environment: PROD
     steps:      
     
       - name: Azure Login
@@ -41,22 +36,7 @@ jobs:
     
       - name: Destroy Resource Group
         run: |
-          az group delete -n ${{ env.FIBONACCI_API_RESOURCE_GROUP}} --yes
-          az group delete -n ${{ env.FIBONACCI_API_RESOURCE_GROUP_PROD}} --yes
-
-
-  destroy-weather-api:
-    runs-on: ubuntu-latest
-
-    steps:      
-    
-      - name: Azure Login
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}    
-    
-      - name: Destroy Resource Group
-        run: |
-          az group delete -n ${{ env.WEATHER_API_RESOURCE_GROUP}} --yes
-          az group delete -n ${{ env.WEATHER_API_RESOURCE_GROUP_PROD}} --yes
+          az group delete -n ${{ vars.RESOURCE_GROUP_NAME}} --yes
+          az group delete -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP}} --yes
+          az group delete -n ${{ vars.WEATHER_API_RESOURCE_GROUP}} --yes
 

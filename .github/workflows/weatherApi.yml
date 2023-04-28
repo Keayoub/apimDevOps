@@ -39,11 +39,7 @@ jobs:
     needs: 
       - build-api
     
-    environment: DEV
-
-    env:
-      RESOURCE_GROUP_NAME: 'rg-apim-bicep-dev'
-      APIM_NAME: ${{ secrets.APIM_DEV_NAME }}
+    environment: DEV  
 
     runs-on: ubuntu-latest
     
@@ -69,19 +65,15 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
           template: ./weatherApi/template/api.bicep
-          parameters: WebUrl=${{ secrets.WEBAPP_WEATHERAPI_URL_DEV }} ApimServiceName=${{ env.APIM_NAME}}   
+          parameters: WebUrl=${{ secrets.WEBAPP_WEATHERAPI_URL_DEV }} ApimServiceName=${{ vars.APIM_NAME}}   
 
   deploy-api-prod:    
     needs: 
       - deploy-api-dev
     
-    environment: PROD
-
-    env:
-      RESOURCE_GROUP_NAME: 'rg-apim-bicep-prod'
-      APIM_NAME: ${{ secrets.APIM_PROD_NAME }}
+    environment: PROD      
 
     runs-on: ubuntu-latest
     
@@ -107,6 +99,6 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
           template: ./weatherApi/template/api.bicep
-          parameters: WebUrl=${{ secrets.WEBAPP_WEATHERAPI_URL_PROD }} ApimServiceName=${{ env.APIM_NAME}}                      
+          parameters: WebUrl=${{ secrets.WEBAPP_WEATHERAPI_URL_PROD }} ApimServiceName=${{ vars.APIM_NAME}}                      

@@ -13,8 +13,7 @@ env:
 jobs:
   create-azure-resource-dev:
     
-    env:
-      RESOURCE_GROUP_NAME: 'apim-fibonacci-rg'
+    environment: DEV
       
     runs-on: ubuntu-latest
     
@@ -28,7 +27,7 @@ jobs:
           
       - name: Create Resource Group
         run: |
-          az group create -n ${{ env.RESOURCE_GROUP_NAME }} -l ${{ env.LOCATION }}
+          az group create -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
 
       - name: Build bicep template
         run: |
@@ -39,30 +38,15 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          resourceGroupName: ${{ vars.FIBONACCI_API_RESOURCE_GROUP }}
           template: ./fibonacciApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}}
-
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Web App Name Fibonacci Dev
-        with:
-          name: WEBAPP_FIBONACCI_NAME_DEV
-          value: ${{ steps.armDeployment.outputs.webAppName }}
-          pa_token: ${{ secrets.PA_TOKEN }}
-
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Web App URL Fibonacci Dev
-        with:
-          name: WEBAPP_FIBONACCI_URL_DEV
-          value: ${{ steps.armDeployment.outputs.url }}
-          pa_token: ${{ secrets.PA_TOKEN }}                     
-  
+          parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEBAPP_FIBONACCI_NAME }} appServicePlanName=${{ vars.WEBAPP_FIBONACCI_NAME }}-asp }}
+     
   create-azure-resource-prod:
     needs:             
       - create-azure-resource-dev   
-      
-    env:
-      RESOURCE_GROUP_NAME: 'apim-fibonacci-prod-rg'
+
+    environment: PROD  
             
     runs-on: ubuntu-latest
           
@@ -76,7 +60,7 @@ jobs:
           
       - name: Create Resource Group
         run: |
-          az group create -n ${{ env.RESOURCE_GROUP_NAME }} -l ${{ env.LOCATION }}
+          az group create -n ${{ vars.FIBONACCI_API_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
 
       - name: Build bicep template
         run: |
@@ -87,21 +71,6 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          resourceGroupName: ${{ vars.FIBONACCI_API_RESOURCE_GROUP }}
           template: ./fibonacciApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}}
-
-
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Web App Name Fibonacci Prod
-        with:
-          name: WEBAPP_FIBONACCI_NAME_PROD
-          value: ${{ steps.armDeployment.outputs.webAppName }}
-          pa_token: ${{ secrets.PA_TOKEN }}
-
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Web App URL Fibonacci Prod
-        with:
-          name: WEBAPP_FIBONACCI_URL_PROD
-          value: ${{ steps.armDeployment.outputs.url }}
-          pa_token: ${{ secrets.PA_TOKEN }}              
+          parameters: location=${{ env.LOCATION}} webappname=${{ vars.FIBONACCI_WEBAPP_NAME }} appServicePlanName=${{ vars.FIBONACCI_WEBAPP_NAME }}-asp }}

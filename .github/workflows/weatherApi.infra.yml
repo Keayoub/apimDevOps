@@ -13,6 +13,7 @@ env:
 jobs:
   create-azure-resource-dev:
 
+    environment: DEV
     env:
       RESOURCE_GROUP_NAME: 'apim-weather-rg'
 
@@ -28,7 +29,7 @@ jobs:
           
       - name: Create Resource Group
         run: |
-          az group create -n ${{ env.RESOURCE_GROUP_NAME }} -l ${{ env.LOCATION }}
+          az group create -n ${{ vars.WEATHER_API_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
 
       - name: Build bicep template
         run: |
@@ -39,7 +40,7 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          resourceGroupName: ${{ vars.WEATHER_API_RESOURCE_GROUP }}
           template: ./weatherApi/infra/infra.json
           parameters: location=${{ env.LOCATION}}
 
@@ -62,9 +63,7 @@ jobs:
       - create-azure-resource-dev
     
     runs-on: ubuntu-latest
-    
-    env:
-      RESOURCE_GROUP_NAME: 'apim-weather-prod-rg'
+    environment: PROD
 
     steps:      
       - uses: actions/checkout@v2
@@ -76,7 +75,7 @@ jobs:
           
       - name: Create Resource Group
         run: |
-          az group create -n ${{ env.RESOURCE_GROUP_NAME }} -l ${{ env.LOCATION }}
+          az group create -n ${{ vars.WEATHER_API_RESOURCE_GROUP }} -l ${{ env.LOCATION }}
 
       - name: Build bicep template
         run: |
@@ -87,20 +86,20 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          resourceGroupName: ${{ vars.WEATHER_API_RESOURCE_GROUP }}
           template: ./weatherApi/infra/infra.json
-          parameters: location=${{ env.LOCATION}}
+          parameters: location=${{ env.LOCATION}} webappname=${{ vars.WEATHER_WEBAPP_NAME }} appServicePlanName=${{ vars.WEATHER_WEBAPP_NAME }}-asp }}
 
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Web App Name WEATHERAPI PROD
-        with:
-          name: WEBAPP_WEATHERAPI_NAME_PROD
-          value: ${{ steps.armDeployment.outputs.webAppName }}
-          pa_token: ${{ secrets.PA_TOKEN }}
+      # - uses: gliech/create-github-secret-action@v1
+      #   name: Write Web App Name WEATHERAPI PROD
+      #   with:
+      #     name: WEBAPP_WEATHERAPI_NAME_PROD
+      #     value: ${{ steps.armDeployment.outputs.webAppName }}
+      #     pa_token: ${{ secrets.PA_TOKEN }}
 
-      - uses: gliech/create-github-secret-action@v1
-        name: Write Web App URL WEATHERAPI PROD
-        with:
-          name: WEBAPP_WEATHERAPI_URL_PROD
-          value: ${{ steps.armDeployment.outputs.url }}
-          pa_token: ${{ secrets.PA_TOKEN }}                               
+      # - uses: gliech/create-github-secret-action@v1
+      #   name: Write Web App URL WEATHERAPI PROD
+      #   with:
+      #     name: WEBAPP_WEATHERAPI_URL_PROD
+      #     value: ${{ steps.armDeployment.outputs.url }}
+      #     pa_token: ${{ secrets.PA_TOKEN }}                               
