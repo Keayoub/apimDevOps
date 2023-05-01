@@ -1,0 +1,99 @@
+openapi: 3.0.1
+info:
+  title: mockapi
+  description: Create a mock API
+  version: '1.0'
+servers:
+  - url: https://kayapim.azure-api.net/mockapi
+paths:
+  /:
+    get:
+      summary: getdata
+      description: get data
+      operationId: getdata
+      responses:
+        '200':
+          description: Return valid data
+          headers:
+            Content-Type:
+              schema:
+                enum:
+                  - application/json
+                type: string
+                default: application/json
+          content:
+            application/json:
+              example:
+                - product_name: sed magna at nunc commodo placerat praesent blandit nam nulla
+                  product_description: Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.
+                  product_category: beauty
+                  product_price: 868.56
+                  product_quantity: 647
+                  product_weight: 52.84
+                  product_dimensions: dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut
+                  product_material: cotton
+                  product_brand: vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus
+                  product_release_date: '2015-08-17'
+                - product_name: lectus in quam fringilla rhoncus mauris enim leo rhoncus sed
+                  product_description: "Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum."
+                  product_category: clothing
+                  product_price: 193.71
+                  product_quantity: 75
+                  product_weight: 90.55
+                  product_dimensions: pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est
+                  product_material: cotton
+                  product_brand: in felis donec semper sapien a libero nam dui proin
+                  product_release_date: '2015-04-23'
+                - product_name: lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat
+                  product_description: "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat."
+                  product_category: beauty
+                  product_price: 575.86
+                  product_quantity: 716
+                  product_weight: 96.44
+                  product_dimensions: ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer
+                  product_material: wood
+                  product_brand: interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis vel dapibus
+                  product_release_date: '2020-08-20'
+                - product_name: augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse
+                  product_description: 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.'
+                  product_category: electronics
+                  product_price: 772.63
+                  product_quantity: 955
+                  product_weight: 4.4
+                  product_dimensions: non mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in
+                  product_material: leather
+                  product_brand: nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam a odio in
+                  product_release_date: '2012-01-16'
+                - product_name: platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum
+                  product_description: Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.
+                  product_category: toys
+                  product_price: 153.53
+                  product_quantity: 241
+                  product_weight: 72.05
+                  product_dimensions: imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo
+                  product_material: wood
+                  product_brand: ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices
+                  product_release_date: '2012-08-27'
+                - product_name: tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse
+                  product_description: Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.
+                  product_category: beauty
+                  product_price: 449.82
+                  product_quantity: 202
+                  product_weight: 87.23
+                  product_dimensions: magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et
+                  product_material: wood
+                  product_brand: sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in
+                  product_release_date: '2014-07-13'
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

@@ -1,0 +1,39 @@
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required": [],
+        "properties": {
+            "product_name": {
+                "type": "string"
+            },
+            "product_description": {
+                "type": "string"
+            },
+            "product_category": {
+                "type": "string"
+            },
+            "product_price": {
+                "type": "number"
+            },
+            "product_quantity": {
+                "type": "number"
+            },
+            "product_weight": {
+                "type": "number"
+            },
+            "product_dimensions": {
+                "type": "string"
+            },
+            "product_material": {
+                "type": "string"
+            },
+            "product_brand": {
+                "type": "string"
+            },
+            "product_release_date": {
+                "type": "string"
+            }
+        }
+    }
+}
