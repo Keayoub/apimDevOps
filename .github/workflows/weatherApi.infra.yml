@@ -8,14 +8,11 @@ on:
 
 env:
   LOCATION: 'eastus'
-  AZURE_WEBAPP_PACKAGE_PATH: 'artifact'
 
 jobs:
   create-azure-resource-dev:
 
     environment: DEV
-    env:
-      RESOURCE_GROUP_NAME: 'apim-weather-rg'
 
     runs-on: ubuntu-latest
       
