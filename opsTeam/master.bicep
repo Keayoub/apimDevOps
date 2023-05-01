@@ -73,4 +73,19 @@ module globalPolicy 'policy/global.policy.bicep' = {
   ]
 }
 
+// Api policies
+module apisPolicy 'policy/apis.policy.bicep' = {
+  scope: resourceGroup(rg.name)
+  name: 'apispolicies'
+  params: {
+    ApimServiceName: apimName
+    BaseUrl: repoBaseUrl
+  }
+  dependsOn: [
+    apim
+    namedValue
+  ]
+}
+
+
 output apiManagementName string = apimName
